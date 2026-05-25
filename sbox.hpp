@@ -168,7 +168,6 @@ class sbox
     public:
         string encode(vector<string>& strs)
         {
-        	cout << "[#] Encrypting....\n";
             string enc = "";
             for (const string& s : strs) {
                 uint32_t len = (uint32_t)s.length();
@@ -192,7 +191,6 @@ class sbox
     
         vector<string> decode(const string s)
         {
-        	cout << "[#] Decrypting....\n";
             vector<string> re;
             size_t cursor = 0;
             const size_t sz = s.size();
