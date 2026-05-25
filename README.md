@@ -3,10 +3,6 @@
 Standard solutions rely on `length + "#" + string`. That is trivial to reverse. 
 **sbox** utilizes a `constexpr` AES-128 block cipher to mutate strings into high-entropy noise.
 
-<p align="center">
-  <img width="498" height="280" alt="sbox animation" src="https://github.com/user-attachments/assets/e8401e57-3927-4ccf-acde-7884be263dab" />
-</p>
-
 ### The Story
 During the Neetcode "Encode and Decode Strings" challenge, I ported the AES engine from my obfuscation project, **[Obfusk8](https://github.com/x86byte/Obfusk8)**. 
 
