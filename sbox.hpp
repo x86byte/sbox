@@ -228,23 +228,26 @@ class sbox
 template <size_t N>
 struct sbox_string {
     uint8_t data[((N + 15) / 16) * 16] = {0};
-    size_t size = N;
+    size_t len = N;
 
-    constexpr sbox_string(const char* str) {
-        for (size_t i = 0; i < N; ++i) data[i] = str[i];
-
+    constexpr sbox_string(const char (&str)[N]) {
+        for(size_t i = 0; i < N; ++i)
+            data[i] = (uint8_t)str[i];
         uint8_t key[16] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0a,0x0b,0x0c,0x0d,0x0e,0x0f,0x10};
-
-        for (size_t b = 0; b < (N + 15) / 16; ++b) {
+        for (size_t b = 0; b < (N + 15) / 16; ++b)
             aes_constexpr::EncryptBlock(&data[b * 16], key);
-        }
     }
 };
 
-#define PROTECT(str) []() { \
-    static constexpr sbox_string<(sizeof(str))> hd(str); \
-    return hd; \
-}()
+#define ObfStr(str) ([&]() -> string { \
+    static constexpr sbox_string<sizeof(str)> _h(str); \
+    uint8_t _t[sizeof(_h.data)]; \
+    memcpy(_t, _h.data, sizeof(_t)); \
+    uint8_t _k[16] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0a,0x0b,0x0c,0x0d,0x0e,0x0f,0x10}; \
+    for(int _b = 0; _b < sizeof(_t)/16; _b++) \
+        aes_constexpr::DecryptBlock(&_t[_b*16], _k); \
+    return string((char*)_t, _h.len - 1); \
+}())
 ////////////////////////////////////////////////
 
 ////////////////////////////////////////////////
@@ -255,9 +258,10 @@ struct sbox_strings {
     size_t len = N;
 
     constexpr sbox_strings(const char (&str)[N]) {
-        for (size_t i = 0; i < N; ++i) data[i] = (uint8_t)str[i];
+        for(size_t i = 0; i < N; ++i)
+            data[i] = (uint8_t)str[i];
         uint8_t key[16] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0a,0x0b,0x0c,0x0d,0x0e,0x0f,0x10};
-        for (size_t b = 0; b < (N + 15) / 16; ++b)
+        for(size_t b = 0; b < (N + 15) / 16; ++b)
             aes_constexpr::EncryptBlock(&data[b * 16], key);
     }
 };
