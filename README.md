@@ -13,10 +13,6 @@ The implementation passed in **7ms** on the first submission. Cryptographic secu
 - **Binary Safe:** Effortlessly handles raw payloads and null bytes.
 - **Static Stealth:** Plaintext is eliminated at compile-time; nothing for static analysis to find.
 
-
-<img width="388" height="173" alt="performance proof" src="https://github.com/user-attachments/assets/c3d77c38-7205-4576-ac87-e134a5853812" />
-
-
 ### Performance
 **7ms runtime.** 
 Proving that overkill can still be optimal.
