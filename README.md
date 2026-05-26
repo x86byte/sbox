@@ -1,4 +1,4 @@
-# sbox
+# sbox - Compile-time AES string obfuscation for C++
 
 Standard solutions rely on `length + "#" + string`. That is trivial to reverse. 
 **sbox** utilizes a `constexpr` AES-128 block cipher to mutate strings into high-entropy noise.
